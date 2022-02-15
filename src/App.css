@@ -1,0 +1,326 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: 'black chancery';
+  src: url('./fonts/Black Chancery.ttf');
+}
+
+@font-face {
+  font-family: 'angelican';
+  src: url('./fonts/Angelican.ttf');
+}
+
+@font-face {
+  font-family: 'calling angels';
+  src: url('./fonts/Calling Angels.ttf');
+}
+
+
+
+body {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background: url('./img/bg02.jpg');
+}
+
+.container {
+  display: grid;
+  place-items: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  min-width: 300px;
+  height: 80vh;
+  border-radius: 15px;
+  box-shadow: -4px 4px 20px -3px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(0deg, rgba(255,255,255,0.25) 0%, rgba(255,107,107,0.5) 34%, rgba(255,107,107,0.75) 85%);
+}
+
+.controller-bar {
+  min-height: 15%;
+  display: grid;
+  place-items: center;
+  border-bottom: 3px solid rgba(95, 39, 205, 0.75);
+}
+
+.controller-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  height: 50%;
+  border-radius: 25px;
+  justify-content: center;
+  align-items: center;
+  background-color: violet;
+}
+
+.controller {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  width: 52%;
+  height: 100%;
+  cursor: pointer;
+  font-family: "black chancery";
+  font-size: 17px;
+}
+
+.controller.active {
+  position: relative;
+  width: 55%;
+  margin: 0 -5%;
+  border-radius: 25px;
+  color: whitesmoke;
+  background-color: #5f27cd;
+}
+
+.form-area {
+  display: flex;
+  flex-direction: column;
+  height: 85%;
+  width: 100%;
+  align-items: center;
+}
+
+.form-header {
+  height: fit-content;
+  margin-top: 20px;
+  font-size: 20px;
+  font-family: 'Roboto Slab', serif;
+}
+
+.form-body {
+  margin-top: 15px;
+  width: 90%;
+}
+
+.form-body.login {
+  height: 53%;
+}
+
+.form-body.register {
+  height: 80%;
+  overflow: hidden;
+}
+
+.input-group {
+  display: grid;
+  place-items: center;
+}
+
+.input-group.register {
+  grid-auto-rows: 57px;
+  width: 100%;
+  height: fit-content;
+  min-height: 50%;
+  max-height: 80%;
+  overflow-y: scroll;
+}
+
+.input-group.login {
+  grid-auto-rows: 60px;
+  width: 100%;
+  margin: 20px 0 20px 0;
+}
+
+.input-group > input {
+  margin: 10px 0;
+  padding: 5px 13px;
+  width: 75%;
+  height: 20px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Trocchi', serif;
+  font-size: 15px;
+  font-style: italic;
+  transition: 0.25s;
+}
+
+.input-group > .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 5%;
+  width: 85%;
+  height: fit-content;
+  border-radius: 20px;
+}
+
+.input-group > .input-wrapper > input {
+  margin: 10px 0;
+  padding: 5px 13px;
+  width: 90%;
+  height: 20px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Trocchi', serif;
+  font-size: 15px;
+  font-style: italic;
+  transition: 0.25s;
+}
+
+.input-group > .input-wrapper > a {
+  margin-left: 25px;
+  width: 100%;
+  font-family: 'Trocchi', serif;
+  font-size: 11px;
+  margin-top: -8px;
+  color: red;
+}
+
+.input-group > .input-wrapper > input:focus {
+  width: 100%;
+  outline: 1px solid #5f27cd;
+}
+
+.input-group > .input-wrapper.firstRow {
+  display: flex;
+  flex-direction: row;
+  gap: 2%;
+  justify-content: center;;
+}
+
+.input-group .input-wrapper.firstRow > input {
+  margin: 10px 0;
+  padding: 5px 15px;
+  width: 36%;
+}
+
+.input-group .input-wrapper.firstRow > input:focus {
+  width: 50%;
+}
+
+.input-group.register .dob {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  width: fit-content;
+  justify-content: center;
+}
+
+.input-group.register .dob > input {
+  padding: 5px 10px;
+  width: 17%;
+  height: 20px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Trocchi', serif;
+  font-size: 15px;
+  font-style: italic;
+  transition: 0.25s;
+}
+
+.input-group.register .dob > input:focus {
+  width: 23%;
+  outline: 1px solid #5f27cd;
+}
+
+#day {
+  width: 10%;
+}
+
+#day:focus {
+  width: 14%;
+}
+
+.input-group.register .dob > select {
+  padding: 0px 10px;
+  width: 38%;
+  height: 30px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Trocchi', serif;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.input-group.register .dob > select:focus {
+  width: 43%;
+  outline: 1px solid #5f27cd;
+}
+
+.input-group.register .dob > select:invalid {
+  color: gray;
+}
+
+.input-group .input-wrapper > select {
+  padding: 5px 13px;
+  width: 99%;
+  height: 30px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Trocchi', serif;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.input-group .input-wrapper > select:focus {
+  width: 110%;
+  outline: 1px solid blue;
+}
+
+.input-group .input-wrapper > select:invalid {
+  color: gray;
+}
+
+.input-group::-webkit-scrollbar {
+  width: 0px;
+}
+
+.submit {
+  display: grid;
+  place-items: center;
+  margin-top: 10px;
+}
+
+.submit > input {
+  cursor: pointer;
+  width: 70%;
+  height: 95%;
+  padding: 7px 0;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  font-family: "black chancery";
+  font-size: 17px;
+  transition: 0.2s;
+  color: whitesmoke;
+  background-color: #5f27cd;
+}
+
+.submit > input:hover {
+  width: 80%;
+  height: 100%;
+  font-size: 19px;
+}
+
+.submit > input:focus {
+  width: 80%;
+  height: 110%;
+  font-size: 18px;
+  border: none;
+  outline: none;
+}
+
+.form-footer {
+  text-align: center;
+}
+
+.form-footer > a {
+  cursor: pointer;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 12px;
+  text-decoration-line: underline;
+}
+
+.form-footer > a:hover {
+  font-size: 13px;
+  color: darkblue;
+}

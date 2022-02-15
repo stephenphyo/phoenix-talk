@@ -1,0 +1,158 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
+.container {
+  display: grid;
+  place-items: center;
+  height: 70vh;
+  width: 100vw;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  min-width: 300px;
+  height: 100vh;
+  border-radius: 15px;
+  box-shadow: -4px 4px 20px -3px rgba(0, 0, 0, 0.5);
+  background-color: #ff6b6b;
+}
+
+
+.controller-bar {
+  flex: 0.15;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-bottom: 3px solid rgba(95, 39, 205, 0.75);
+}
+
+.controller-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 55%;
+  height: 55%;
+  border-radius: 25px;
+  justify-content: center;
+}
+
+.controller {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  width: 50%;
+  cursor: pointer;
+}
+
+.controller.active {
+  position: relative;
+  width: 55%;
+  margin: 0 -5%;
+  border-radius: 25px;
+  color: whitesmoke;
+  background-color: #5f27cd;
+}
+
+.form-area {
+  flex: 0.85;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-items: center;
+}
+
+.form-header {
+  flex: 0.15;
+  height: 50px;
+  margin-top: 5px;
+  text-align: center;
+  font-size: 20px;
+  font-family: 'Roboto Slab', serif;
+}
+
+.form-body {
+  margin: 10px 0 0 0;
+  height: 70vh;
+  overflow-y: scroll;
+  background-color: darkblue;
+}
+
+.form-body > .input-group {
+  margin: 20px 0 25px 0;
+  display: grid;
+  place-items: center;
+}
+
+.form-body > .input-group > input {
+  margin: 15px 0;
+  padding: 50px 13px;
+  width: 85%;
+  height: 20px;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Trocchi', serif;
+  font-size: 15px;
+  font-style: italic;
+  transition: 0.25s;
+}
+
+.form-body > .input-group > input:focus {
+  width: 95%;
+}
+
+.form-body > .submit {
+  display: grid;
+  place-items: center;
+}
+
+.form-body > .submit > input {
+  cursor: pointer;
+  width: 70%;
+  padding: 7px 0;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  font-family: 'Alegreya';
+  font-size: 16px;
+  transition: 0.2s;
+  color: whitesmoke;
+  background-color: #5f27cd;
+}
+
+.form-body > .submit > input:hover {
+  width: 80%;
+  height: 110%;
+  font-size: 18px;
+}
+
+.form-body > .submit > input:focus {
+  border: none;
+  outline: none;
+  width: 80%;
+  height: 110%;
+  font-size: 18px;
+}
+
+.form-footer {
+  text-align: center;
+}
+
+.form-footer > a {
+  cursor: pointer;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 12px;
+  text-decoration-line: underline;
+}
+
+.form-footer > a:hover {
+  color: darkblue;
+}
