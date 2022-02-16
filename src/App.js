@@ -1,21 +1,21 @@
 import './App.css';
+import RegisterPopup from './RegisterPopup';
 import React, { useState, useEffect } from "react";
 
 function App() {
 
   const [loginForm, setLoginForm] = useState(true);
   const [registerForm, setRegisterForm] = useState(false);
+  const [register, setRegister] = useState(false);
 
   const sel_login_form = () => {
     setLoginForm(true);
     setRegisterForm(false);
-    console.log("Login Form");
   }
 
   const sel_register_form = () => {
     setLoginForm(false);
     setRegisterForm(true);
-    console.log("Register Form");
   }
 
   const login = (e) => {
@@ -23,7 +23,7 @@ function App() {
     e.preventDefault();
   }
 
-  /* FORM OBJECTS */
+  /* LOGIN FORM */
   function LoginForm() {
     return (
       <div className="form-area">
@@ -46,7 +46,8 @@ function App() {
     );
   }
 
-  function RegisterForm() {
+  /* REGISTER FORM */
+  function RegisterForm({ setRegister }) {
     const [regUsername, setRegUsername] = useState("");
     const [regInitPwd, setRegInitPwd] = useState("");
     const [regCfmPwd, setRegCfmPwd] = useState("");
@@ -54,14 +55,15 @@ function App() {
     const [day, setDay] = useState("");
     const [year, setYear] = useState("");
     const [err, setErr] = useState({});
+    // const [register, setRegister] = useState(false);
 
-    let showErr = {};
+    let errObj = {};
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Augusy', 'September', 'October', 'November', 'December'];
 
     // Functions
     const checkUsername = () => {
       if (regUsername == "") {
-        showErr["username"] = "Username must not be empty";
+        errObj["username"] = "Username must not be empty";
       }
     }
 
@@ -75,13 +77,13 @@ function App() {
 
     const checkPassword = () => {
       if (regInitPwd=="") {
-        showErr["initPwd"] = "Password must not be empty";
+        errObj["initPwd"] = "Password must not be empty";
       }
       else if (regInitPwd.length < 8) {
-        showErr["initPwd"] = "Password length must be 8 or above";
+        errObj["initPwd"] = "Password length must be 8 or above";
       }
       else if (regInitPwd != "" && regInitPwd != regCfmPwd) {
-        showErr["cfmPwd"] = "Passwords do not match"
+        errObj["cfmPwd"] = "Passwords do not match"
       }
     }
 
@@ -102,9 +104,14 @@ function App() {
     }
 
     const checkEmail = () => {
+      var regex = /\S+@\S+.[a-z]{2,}$/;
+
       if (regEmail == "") {
-        showErr["email"] = "Email must not be empty";
+        errObj["email"] = "Email must not be empty";
       }
+      else if (!regex.test(regEmail)) {
+        errObj["email"] = "Please enter valid email address";
+      };
     }
 
     const validateRegister = (e) => {
@@ -117,10 +124,11 @@ function App() {
       checkEmail();
 
       // Error Processing
-      if (Object.keys(showErr).length == 0) {
+      if (Object.keys(errObj).length == 0) {
         console.log("No Error");
+        setRegister(true);
       } else {
-        setErr(showErr);
+        setErr(errObj);
         setRegInitPwd("");
         setRegCfmPwd("");
       }
@@ -213,6 +221,10 @@ function App() {
   }
 
   return (
+    <div>
+    <div>
+        {register && <RegisterPopup />}
+    </div>
     <div className="container">
       <div className="form-container">
         <div className="controller-bar">
@@ -226,8 +238,9 @@ function App() {
           </div>
         </div>
         {loginForm && <LoginForm />}
-        {registerForm && <RegisterForm />}
+        {registerForm && <RegisterForm setRegister={setRegister}/>}
       </div>
+    </div>
     </div>
   );
 }

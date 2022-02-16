@@ -69,7 +69,7 @@ body {
   height: 100%;
   cursor: pointer;
   font-family: "black chancery";
-  font-size: 17px;
+  font-size: 18px;
 }
 
 .controller.active {
@@ -183,7 +183,7 @@ body {
 .input-group > .input-wrapper.firstRow {
   display: flex;
   flex-direction: row;
-  gap: 2%;
+  gap: 6.5%;
   justify-content: center;;
 }
 
