@@ -1,0 +1,41 @@
+const mysql = require('serverless-mysql');
+const { v4: uuid } = require('uuid');
+
+/* MySQL CONNECTION */
+var mysqlConn = mysql({
+    config: {
+        host: 'mysql.stephenphyo.com',
+        user: 'stephenphyo',
+        password: 'ALPHAbetagammatango@123',
+        database: 'PHOENIX_TALK'
+    }
+});
+
+exports.handler = async (event) => {
+    // TODO implement
+
+    let response = {};
+
+    let results = await mysqlConn.query(`INSERT INTO Users ` +
+                                        `VALUES (` +
+                                            `'${event.firstName}', '${event.lastName}', ` +
+                                            `'${event.username}', '${event.password}', ` +
+                                            `'${event.email}', '${uuid()}' ` +
+                                        `)`).then(() => {
+                                            response = {
+                                                statusCode: 201,
+                                                body: "Created"
+                                            }
+                                        }).catch(() => {
+                                            response = {
+                                                statusCode: 500,
+                                                body: "Internal Server Error"
+                                            }
+                                        });
+
+    // Run clean up function
+    await mysqlConn.end()
+
+    // Return the results
+    return response
+};
