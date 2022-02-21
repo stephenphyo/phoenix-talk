@@ -21,27 +21,22 @@ mysqlConn.connect ((err) => {
 });
 
 router.post('^/$', (req, res) => {
-    console.log(req.body);
-    res.status(201).send("OK");
-})
-
-// router.post('^/$', (req, res) => {
-//     mysqlConn.query(`INSERT INTO Users ` +
-//                                 `VALUES (` +
-//                                     `'${req.body.firstName}', '${req.body.lastName}', ` +
-//                                     `'${req.body.username}', '${req.body.password}', ` +
-//                                     `'${req.body.email}', '${uuid()}' ` +
-//                                 `)`,
-//         (err, rows, fields) => {
-//             if (!err) {
-//                 console.log(rows);
-//                 res.status(201).send("OK");
-//             } else {
-//                 res.status(500).send("Internal Server Error");
-//                 console.log(err);
-//             }
-//         }
-//     );
-// });
+    mysqlConn.query(`INSERT INTO Users ` +
+                                `VALUES (` +
+                                    `'${req.body.firstName}', '${req.body.lastName}', ` +
+                                    `'${req.body.username}', '${req.body.password}', ` +
+                                    `'${req.body.email}', '${uuid()}' ` +
+                                `)`,
+        (err, rows, fields) => {
+            if (!err) {
+                console.log(rows);
+                res.status(201).send("OK");
+            } else {
+                res.status(500).send("Internal Server Error");
+                console.log(err);
+            }
+        }
+    );
+});
 
 module.exports = router;
