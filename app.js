@@ -10,9 +10,10 @@ const PORT = process.env.PORT || 9010;
 /* Middleware */
 app.use(express.json());
 app.use(reqLog);
-// app.use(cors);
+app.use(cors());
 
 /* Routes */
 app.use('/register', require(PATH.join(__dirname, 'routes', 'register')));
+app.use('/login', require(PATH.join(__dirname, 'routes', 'login')));
 
 app.listen(PORT, () => {console.log(`User Registration API is listening on port: ${PORT}`)});

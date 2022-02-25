@@ -1,39 +1,33 @@
 /* To run this API in AWS Lambda, use 'serverless-mysql' NPM module instead of 'mysql' module */
 
 const express = require('express');
-const mysql = require('mysql');
 const { v4: uuid } = require('uuid');
+const db = require('./db/mysqldb');
+const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
-/* MySQL CONNECTION */
-var mysqlConn = mysql.createConnection({
-    host: 'mysql.stephenphyo.com',
-    user: 'stephenphyo',
-    password: 'ALPHAbetagammatango@123',
-    database: 'PHOENIX_TALK'
-});
-
-mysqlConn.connect ((err) => {
-    if (!err) {
-        console.log("Database Connection Successful");
-    }
-});
-
+// POST
 router.post('^/$', (req, res) => {
-    mysqlConn.query(`INSERT INTO Users ` +
-                                `VALUES (` +
-                                    `'${req.body.firstName}', '${req.body.lastName}', ` +
-                                    `'${req.body.username}', '${req.body.password}', ` +
-                                    `'${req.body.email}', '${uuid()}' ` +
-                                `)`,
+
+    const r = req.body;
+
+    // Generating Salt
+    const salt = bcrypt.genSaltSync(10);
+    // Hashing Password with Salt (Length = 60)
+    const savePwd = bcrypt.hashSync(r.password, salt);
+
+    const query = "INSERT INTO Users VALUES ?";
+    var values = [[uuid(), r.firstName, r.lastName, r.username, savePwd, r.email,
+                          r.dob, r.gender, salt]];
+
+    // 'values'  is an array of arrays wrapped in an array
+    db.query(query, [values],
         (err, rows, fields) => {
             if (!err) {
-                console.log(rows);
                 res.status(201).send("OK");
             } else {
                 res.status(500).send("Internal Server Error");
-                console.log(err);
             }
         }
     );
