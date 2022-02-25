@@ -18,18 +18,23 @@
   src: url('./fonts/Calling Angels.ttf');
 }
 
-
-
-body {
-  display: grid;
-  place-items: center;
+.app-root {
+  width: 100vw;
   height: 100vh;
-  background: url('./img/bg02.jpg');
+  background-color: pink;
 }
 
 .container {
   display: grid;
   place-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.popup {
+  width: 100%;
+  height: 100%;
 }
 
 .form-container {
@@ -53,7 +58,7 @@ body {
 .controller-wrapper {
   display: flex;
   flex-direction: row;
-  width: 50%;
+  width: 55%;
   height: 50%;
   border-radius: 25px;
   justify-content: center;
@@ -87,6 +92,7 @@ body {
   height: 85%;
   width: 100%;
   align-items: center;
+  transition: 0.35s;
 }
 
 .form-header {
@@ -127,33 +133,21 @@ body {
 .input-group.login {
   grid-auto-rows: 60px;
   width: 100%;
-  margin: 20px 0 20px 0;
+  margin: 25px  0;
 }
 
-.input-group > input {
-  margin: 10px 0;
-  padding: 5px 13px;
-  width: 75%;
-  height: 20px;
-  border: none;
-  border-radius: 20px;
-  font-family: 'Trocchi', serif;
-  font-size: 15px;
-  font-style: italic;
-  transition: 0.25s;
-}
-
-.input-group > .input-wrapper {
+.input-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   padding: 0 5%;
   width: 85%;
   height: fit-content;
   border-radius: 20px;
 }
 
-.input-group > .input-wrapper > input {
+.input-wrapper > input {
   margin: 10px 0;
   padding: 5px 13px;
   width: 90%;
@@ -166,7 +160,20 @@ body {
   transition: 0.25s;
 }
 
-.input-group > .input-wrapper > a {
+.input-wrapper > input:focus {
+  width: 100%;
+  outline: none;
+}
+
+.input-wrapper.success > input {
+  border: 2px solid green;
+}
+
+.input-wrapper.error > input {
+  border: 2px solid red;
+}
+
+.input-wrapper > a {
   margin-left: 25px;
   width: 100%;
   font-family: 'Trocchi', serif;
@@ -175,32 +182,27 @@ body {
   color: red;
 }
 
-.input-group > .input-wrapper > input:focus {
-  width: 100%;
-  outline: 1px solid #5f27cd;
-}
-
-.input-group > .input-wrapper.firstRow {
+ .input-wrapper.firstRow {
   display: flex;
   flex-direction: row;
   gap: 6.5%;
   justify-content: center;;
 }
 
-.input-group .input-wrapper.firstRow > input {
+.input-wrapper.firstRow > input {
   margin: 10px 0;
   padding: 5px 15px;
   width: 36%;
 }
 
-.input-group .input-wrapper.firstRow > input:focus {
+.input-wrapper.firstRow > input:focus {
   width: 50%;
 }
 
 .input-group.register .dob {
   display: flex;
   flex-direction: row;
-  gap: 5px;
+  gap: 6px;
   width: fit-content;
   justify-content: center;
 }
@@ -250,6 +252,10 @@ body {
   color: gray;
 }
 
+.input-group.register .dob > select option#valid {
+  color: black;
+}
+
 .input-group .input-wrapper > select {
   padding: 5px 13px;
   width: 99%;
@@ -268,6 +274,10 @@ body {
 
 .input-group .input-wrapper > select:invalid {
   color: gray;
+}
+
+.input-group .input-wrapper > select option#valid {
+  color: black;
 }
 
 .input-group::-webkit-scrollbar {

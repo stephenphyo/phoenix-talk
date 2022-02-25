@@ -1,12 +1,14 @@
 import './App.css';
 import RegisterPopup from './RegisterPopup';
 import React, { useState, useEffect } from "react";
+import Axios from './Axios';
+const sha256 = require('crypto-js').createHash('sha256');
 
 function App() {
 
   const [loginForm, setLoginForm] = useState(true);
   const [registerForm, setRegisterForm] = useState(false);
-  const [register, setRegister] = useState(false);
+  const [registerPopup, setRegisterPopup] = useState(false);
 
   const sel_login_form = () => {
     setLoginForm(true);
@@ -18,13 +20,22 @@ function App() {
     setRegisterForm(true);
   }
 
-  const login = (e) => {
-    console.log("Login");
-    e.preventDefault();
-  }
-
   /* LOGIN FORM */
   function LoginForm() {
+
+    const [loginUsername, setLoginUsername] = useState("");
+    const [loginPwd, setLoginPwd] = useState("");
+    const [loginErr, setLoginErr] = useState([]);
+
+    const validateLogin = (e) => {
+      e.preventDefault();
+
+      Axios.post ('/login', {
+        email: loginUsername,
+        password: loginPwd
+      })
+    }
+
     return (
       <div className="form-area">
         <div className="form-header">
@@ -32,11 +43,23 @@ function App() {
         </div>
         <div className="form-body login">
           <div className="input-group login">
-            <input type="text" placeholder="Enter Username" />
-            <input type="password" placeholder="Enter Password" />
+            <div className={`input-wrapper ${"username" in loginErr && "error"}`}>
+              <input
+                type="text"
+                placeholder="Enter Username"
+                value={loginUsername}
+                onChange={e => setLoginUsername(e.target.value)} />
+            </div>
+            <div className="input-wrapper">
+              <input
+                type="password"
+                placeholder="Enter Password"
+                value={loginPwd}
+                onChange={e => setLoginPwd(e.target.value)} />
+            </div>
           </div>
           <div className="submit">
-            <input type="submit" value="Login" onClick={login} />
+            <input type="submit" value="Login" onClick={validateLogin} />
           </div>
         </div>
           <div className="form-footer">
@@ -47,15 +70,18 @@ function App() {
   }
 
   /* REGISTER FORM */
-  function RegisterForm({ setRegister }) {
+  function RegisterForm() {
+    const [regFirstName, setRegFirstName] = useState("");
+    const [regLastName, setRegLastName] = useState("");
     const [regUsername, setRegUsername] = useState("");
     const [regInitPwd, setRegInitPwd] = useState("");
     const [regCfmPwd, setRegCfmPwd] = useState("");
     const [regEmail, setRegEmail] = useState("");
     const [day, setDay] = useState("");
+    const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
+    const [regGender, setRegGender] = useState("");
     const [err, setErr] = useState({});
-    // const [register, setRegister] = useState(false);
 
     let errObj = {};
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Augusy', 'September', 'October', 'November', 'December'];
@@ -114,6 +140,34 @@ function App() {
       };
     }
 
+    const onEmailChange = (e) => {
+      setRegEmail(e.target.value);
+      if ("email" in err) {
+        delete err["email"];
+        setErr(err);
+      }
+    }
+
+    const submitRegister = (e) => {
+        setRegisterPopup(true);
+
+        // Hashing with SHA256
+        var finalPwd = sha256.update(regCfmPwd).digest('hex');
+
+        const regDob = `${day}-${month.substring(0,3)}-${year}`;
+
+        // API POST
+        Axios.post('/register', {
+          firstName: regFirstName,
+          lastName: regLastName,
+          username: regUsername,
+          password: finalPwd,
+          email: regEmail,
+          dob: regDob,
+          gender: regGender,
+        });
+    }
+
     const validateRegister = (e) => {
       e.preventDefault();
       console.log(regUsername, regInitPwd, regCfmPwd, regEmail);
@@ -125,8 +179,7 @@ function App() {
 
       // Error Processing
       if (Object.keys(errObj).length == 0) {
-        console.log("No Error");
-        setRegister(true);
+        submitRegister();
       } else {
         setErr(errObj);
         setRegInitPwd("");
@@ -145,10 +198,14 @@ function App() {
             <input
               type="text"
               placeholder="First Name"
-              label="First Name" />
-            <input type="text" placeholder="Last Name" />
+              label="First Name"
+              onChange={e => setRegFirstName(e.target.value)} />
+            <input
+              type="text"
+              placeholder="Last Name"
+              onChange={e => setRegLastName(e.target.value)} />
             </div>
-            <div className="input-wrapper">
+            <div className={`input-wrapper ${"username" in err && "error"}`}>
               <input
                 type="text"
                 placeholder="Enter Username"
@@ -156,7 +213,7 @@ function App() {
                 onChange={onUsernameChange} />
               {"username" in err && <a>{err["username"]}</a>}
             </div>
-            <div className="input-wrapper">
+            <div className={`input-wrapper ${"initPwd" in err && "error"}`}>
               <input
                 type="password"
                 placeholder="Set Password"
@@ -164,7 +221,7 @@ function App() {
                 onChange={onInitPwdChange} />
               {"initPwd" in err && <a>{err["initPwd"]}</a>}
             </div>
-            <div className="input-wrapper">
+            <div className={`input-wrapper ${"cfmPwd" in err && "error"}`}>
               <input
                 type="password"
                 placeholder="Confirm Password"
@@ -172,12 +229,14 @@ function App() {
                 onChange={onCfmPwdChange} />
               {"cfmPwd" in err && <a>{err["cfmPwd"]}</a>}
             </div>
-            <div className="input-wrapper">
+            <div className={`input-wrapper ${"email" in err && "error"}`}>
               <input
+                name="email"
                 type="text"
                 placeholder="Enter Email Address"
                 value={regEmail}
-                onChange={e => (setRegEmail(e.target.value))} />
+                autoComplete="on"
+                onChange={onEmailChange} />
               {"email" in err && <a>{err["email"]}</a>}
             </div>
             <div className="dob">
@@ -187,10 +246,10 @@ function App() {
                 id="day"
                 value={day}
                 onChange={e => setDay(e.target.value)} />
-              <select required>
-                <option value="" selected disabled hidden>Month</option>
+              <select required onChange={e => setMonth(e.target.value)}>
+                <option value="" hidden>Month</option>
                 {months.map(ele => (
-                  <option value={ele}>{ele}</option>
+                  <option value={ele} key={ele} id="valid">{ele}</option>
                 ))}
               </select>
               <input
@@ -200,12 +259,12 @@ function App() {
                 value={year}
                 onChange={e => setYear(e.target.value)} />
             </div>
-            <div className="input-wrapper">
-              <select required>
-                <option value="" selected disabled hidden>Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="nogen">Not want to say</option>
+            <div className={`input-wrapper ${"username" in err && "error"}`}>
+              <select onChange={e => setRegGender(e.target.value)} required>
+                <option value="" hidden>Gender</option>
+                <option value="M" id="valid">Male</option>
+                <option value="F" id="valid">Female</option>
+                <option value="O" id="valid">Prefer not to say</option>
               </select>
             </div>
           </div>
@@ -221,26 +280,28 @@ function App() {
   }
 
   return (
-    <div>
-    <div>
-        {register && <RegisterPopup />}
-    </div>
-    <div className="container">
-      <div className="form-container">
-        <div className="controller-bar">
-          <div className="controller-wrapper">
-            <div className={`controller ${loginForm ? "active" : ""}`} onClick={sel_login_form}>
-              Login
-            </div>
-            <div className={`controller ${!loginForm ? "active" : ""}`} onClick={sel_register_form}>
-              Register
+    <div className="app-root">
+      <div className="container">
+        <div className="form-container">
+          <div className="controller-bar">
+            <div className="controller-wrapper">
+              <div className={`controller ${loginForm ? "active" : ""}`} onClick={sel_login_form}>
+                Login
+              </div>
+              <div className={`controller ${!loginForm ? "active" : ""}`} onClick={sel_register_form}>
+                Register
+              </div>
             </div>
           </div>
+          {loginForm && <LoginForm />}
+          {registerForm && <RegisterForm />}
         </div>
-        {loginForm && <LoginForm />}
-        {registerForm && <RegisterForm setRegister={setRegister}/>}
       </div>
-    </div>
+      {registerPopup &&
+        <div className="container popup">
+          <RegisterPopup setRegisterPopup={setRegisterPopup} sel_login_form={sel_login_form}/>
+        </div>
+      }
     </div>
   );
 }
