@@ -2,7 +2,7 @@ import './App.css';
 import RegisterPopup from './RegisterPopup';
 import React, { useState, useEffect } from "react";
 import Axios from './Axios';
-const sha256 = require('crypto-js').createHash('sha256');
+const sha256 = require('crypto-js/sha256');
 
 function App() {
 
@@ -30,16 +30,23 @@ function App() {
     const validateLogin = (e) => {
       e.preventDefault();
 
-      Axios.post ('/login', {
+      Axios.post('/login', {
         email: loginUsername,
         password: loginPwd
+      }).then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.log(err.response);
+        if (err.response.status == 403) {
+          console.log(err.response.data)
+        }
       })
     }
 
     return (
       <div className="form-area">
         <div className="form-header">
-            Login to Account
+          Login to Account
         </div>
         <div className="form-body login">
           <div className="input-group login">
@@ -49,6 +56,7 @@ function App() {
                 placeholder="Enter Username"
                 value={loginUsername}
                 onChange={e => setLoginUsername(e.target.value)} />
+              {"email" in loginErr && <a>{loginErr["email"]}</a>}
             </div>
             <div className="input-wrapper">
               <input
@@ -56,15 +64,16 @@ function App() {
                 placeholder="Enter Password"
                 value={loginPwd}
                 onChange={e => setLoginPwd(e.target.value)} />
+              {"password" in loginErr && <a>{loginErr["password"]}</a>}
             </div>
           </div>
           <div className="submit">
             <input type="submit" value="Login" onClick={validateLogin} />
           </div>
         </div>
-          <div className="form-footer">
-            <a>Forget your password?</a>
-          </div>
+        <div className="form-footer">
+          <a>Forget your password?</a>
+        </div>
       </div>
     );
   }
@@ -102,7 +111,7 @@ function App() {
     }
 
     const checkPassword = () => {
-      if (regInitPwd=="") {
+      if (regInitPwd == "") {
         errObj["initPwd"] = "Password must not be empty";
       }
       else if (regInitPwd.length < 8) {
@@ -149,23 +158,25 @@ function App() {
     }
 
     const submitRegister = (e) => {
-        setRegisterPopup(true);
+      setRegisterPopup(true);
 
-        // Hashing with SHA256
-        var finalPwd = sha256.update(regCfmPwd).digest('hex');
+      // Hashing with SHA256
+      var finalPwd = sha256(regCfmPwd).toString();
 
-        const regDob = `${day}-${month.substring(0,3)}-${year}`;
+      const regDob = `${day}-${month.substring(0, 3)}-${year}`;
 
-        // API POST
-        Axios.post('/register', {
-          firstName: regFirstName,
-          lastName: regLastName,
-          username: regUsername,
-          password: finalPwd,
-          email: regEmail,
-          dob: regDob,
-          gender: regGender,
-        });
+      // API POST
+      Axios.post('/register', {
+        firstName: regFirstName,
+        lastName: regLastName,
+        username: regUsername,
+        password: finalPwd,
+        email: regEmail,
+        dob: regDob,
+        gender: regGender,
+      }).then((res) => {
+        console.log(res)
+      });
     }
 
     const validateRegister = (e) => {
@@ -190,20 +201,20 @@ function App() {
     return (
       <div className="form-area">
         <div className="form-header">
-            Register Account
+          Register Account
         </div>
         <div className="form-body register">
           <div className="input-group register">
             <div className="input-wrapper firstRow">
-            <input
-              type="text"
-              placeholder="First Name"
-              label="First Name"
-              onChange={e => setRegFirstName(e.target.value)} />
-            <input
-              type="text"
-              placeholder="Last Name"
-              onChange={e => setRegLastName(e.target.value)} />
+              <input
+                type="text"
+                placeholder="First Name"
+                label="First Name"
+                onChange={e => setRegFirstName(e.target.value)} />
+              <input
+                type="text"
+                placeholder="Last Name"
+                onChange={e => setRegLastName(e.target.value)} />
             </div>
             <div className={`input-wrapper ${"username" in err && "error"}`}>
               <input
@@ -299,7 +310,7 @@ function App() {
       </div>
       {registerPopup &&
         <div className="container popup">
-          <RegisterPopup setRegisterPopup={setRegisterPopup} sel_login_form={sel_login_form}/>
+          <RegisterPopup setRegisterPopup={setRegisterPopup} sel_login_form={sel_login_form} />
         </div>
       }
     </div>
