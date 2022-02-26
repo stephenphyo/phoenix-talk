@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 9010;
 /* Middleware */
 app.use(express.json());
 app.use(reqLog);
-// app.use(cors());
+app.use(cors());
 
 /* Routes */
 app.use('/register', require(PATH.join(__dirname, 'routes', 'register')));

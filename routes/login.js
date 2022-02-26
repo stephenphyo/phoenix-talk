@@ -9,8 +9,15 @@ router.post('^/$', (req, res) => {
                     `WHERE email = '${req.body.email}'`,
         (err, rows, fields) => {
             if (!err) {
-                console.log(rows, fields);
-                res.status(200).send("OK");
+                console.log(rows);
+                if (rows.length == 0) {
+                    res.status(403).send({
+                        err: "email",
+                        errCode: "Email is not registered"
+                    })
+                } else {
+                    res.status(200).send("OK")
+                }
             } else {
                 console.log(err);
                 res.status(500).send("Error");
