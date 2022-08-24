@@ -1,0 +1,63 @@
+.form_input_text {
+    display: flex;
+    flex-direction: column;
+    width: var(--width);
+    min-width: var(--min-width);
+    max-width: var(--max-width);
+    height: fit-content;
+}
+
+.form_input_text label {
+    padding-left: 8px;
+    font-family: var(--label-font);
+    font-size: var(--label-font-size);
+    color: var(--label-color);
+}
+
+.form_input_text input {
+    height: var(--height);
+    width: 100%;
+    padding: var(--input-padding);
+    margin-top: 5px;
+    margin-bottom: 3px;
+    border: var(--input-border);
+    border-radius: var(--input-border-radius);
+    font-family: var(--input-font);
+    font-size: var(--input-font-size);
+    color: var(--input-text-color);
+    background-color: var(--input-background-color);
+    transition: var(--transition);
+}
+
+.form_input_text input:focus {
+    border-color: var(--input-border-focus-color);
+    outline: 0;
+    box-shadow: 0 0 3px 2px var(--input-border-focus-color);
+}
+
+.form_input_text.error input {
+    border-color: var(--error-color);
+    outline: 0;
+    box-shadow: 0 0 3px 2px var(--error-color);
+}
+
+.form_input_text_error {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: var(--error-font);
+    font-size: var(--error-font-size);
+    color: var(--error-color);
+    margin-top: 2px;
+    visibility: hidden;
+}
+
+.form_input_text_error svg {
+    margin-left: 7px;
+    margin-right: 4px;
+    font-size: calc(var(--error-font-size) + 3px);
+}
+
+.form_input_text_error.visible {
+    visibility: visible;
+}

@@ -1,0 +1,119 @@
+/* Modal Container */
+.modal {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+
+.modal_container {
+    width: var(--width);
+    height: fit-content;
+    margin: var(--margin);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.fade {
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-delay) ease-out;
+}
+
+.fade.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.slideY {
+    transform: translateY(calc(-100% - 80px));
+    transition: transform var(--transition-delay) ease-out;
+}
+
+.slideY.show {
+    transform: translateY(0);
+}
+
+@media screen and (max-width: 480px) {
+    .modal_container {
+        width: 90%;
+    }
+}
+
+/* Modal Header */
+.modal_header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: var(--height);
+    user-select: none;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
+    font-family: var(--font-family);
+    color: var(--color);
+    background-color: var(--background-color);
+    z-index: 2;
+}
+
+.modal_header p {
+    font-size: var(--font-size);
+    margin-top: 3px;
+    margin-left: var(--text-margin);
+}
+
+/* Modal Body */
+.modal_body {
+    width: 100%;
+    padding: var(--padding);
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: var(--background-color);
+}
+
+.modal_body.fixed {
+    display: flex;
+    height: var(--height);
+}
+
+.modal_body.fit {
+    display: block;
+    height: fit-content;
+    min-height: var(--height);
+}
+
+.modal_body_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    line-height: 20px;
+}
+
+/* Modal Footer */
+.modal_footer {
+    display: flex;
+    align-items: center;
+    justify-content: var(--justify-content);
+    width: 100%;
+    height: var(--height);
+    padding: var(--padding);
+    box-sizing: border-box;
+    border-top: 1px solid lightgray;
+    background-color: var(--background-color);
+    gap: var(--gap);
+}
+
+@media screen and (max-width: 480px) {
+    .modal_footer {
+        padding: 0 5px;
+        justify-content: center;
+    }
+}

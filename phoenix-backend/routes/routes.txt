@@ -1,0 +1,40 @@
+----------------------
+/* Users [Frontend] */
+----------------------
+/login
+/register
+
+----------------------
+/* Users [Backend] */
+----------------------
+GET /users/<user id>/rooms
+
+POST /users/login
+POST /users/register
+
+PATCH /users/:id
+
+----------------------
+/* Rooms [Frontend] */
+----------------------
+/rooms/<room id>
+
+---------------------
+/* Rooms [Backend] */
+---------------------
+POST /rooms/new
+DELETE /rooms/delete?id=<room id>
+
+POST /rooms/<room_id>/messages/new
+PATCH /rooms/<room_id>/messages/edit
+DELETE /rooms/<room_id>/messages/delete?id=<message_id>
+
+POST /rooms/<room_id>/members/new
+
+----------
+/* Test */
+----------
+POST /test/items/new
+GET /test/items/
+POST /test/owners/new
+GET /test/owners

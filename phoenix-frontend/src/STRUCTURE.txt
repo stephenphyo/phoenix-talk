@@ -1,0 +1,17 @@
+{
+    _id: ID,
+    groupName: String
+    groupMembers: Array,
+    groupSettings: {
+
+    }
+    groupMessages: {
+        {
+            msgSender:
+            msgContent:
+            msgType:
+            msgSentTime:
+        }
+    }
+    created_at: Timestamp
+}

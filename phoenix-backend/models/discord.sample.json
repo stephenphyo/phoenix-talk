@@ -1,0 +1,27 @@
+{
+  "id": "1009774569877426176",
+  "type": 0,
+  "content": "hey",
+  "channel_id": "893152767005327401",
+  "author": {
+    "id": "872047688168931328",
+    "username": "Paladin RisingAsh",
+    "avatar": "89b8fb6a408f2624c1ad3b868e080b18",
+    "avatar_decoration": null,
+    "discriminator": "5208",
+    "public_flags": 0
+  },
+  "attachments": [],
+  "embeds": [],
+  "mentions": [],
+  "mention_roles": [],
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false,
+  "timestamp": "2022-08-18T10:43:38.163000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "nonce": "1009774568891482112",
+  "referenced_message": null
+}
